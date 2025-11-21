@@ -1,64 +1,79 @@
-import 'dart:math' show pi;
 import 'package:flutter/material.dart';
+import 'dart:math'; // Import for the 'pi' constant
+// Ensure the path below correctly points to your Dashboard file
 
-class AreaOfCircleScreen extends StatefulWidget {
-  const AreaOfCircleScreen({super.key});
+class AreaOfCircle extends StatefulWidget {
+  const AreaOfCircle({super.key});
+
   @override
-  State<AreaOfCircleScreen> createState() => _AreaOfCircleScreenState();
+  State<AreaOfCircle> createState() => _AreaOfCircle();
 }
 
-class _AreaOfCircleScreenState extends State<AreaOfCircleScreen> {
-  final TextEditingController radiusController = TextEditingController();
-  double? result;
+class _AreaOfCircle extends State<AreaOfCircle> {
+  double radius = 0;
+  double area = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Area of Circle'),
-        backgroundColor: Colors.amber,
+        title: const Text("Area of Circle"), // Added const
+        backgroundColor: const Color.fromARGB(255, 6, 202, 192),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8), // Added const
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              controller: radiusController,
-              decoration: const InputDecoration(
-                labelText: 'Enter radius',
-                hintText: 'e.g. 5',
-                border: OutlineInputBorder(),
+              decoration: const InputDecoration( // Added const
+                labelText: "Enter radius",
+                hintText: "e.g 2",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  borderSide: BorderSide(color: Colors.red),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
               ),
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.number, // Recommended for number input
+              onChanged: (value) { // Simplified onChanged syntax
+                try {
+                  radius = double.parse(value);
+                } catch (e) {
+                  // Handle invalid input gracefully if necessary
+                  radius = 0; 
+                }
+              },
             ),
-            const SizedBox(height: 16),
-
-            // CALCULATE BUTTON
+            const SizedBox(height: 8), // Added const
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(backgroundColor: Colors.amber),
                 onPressed: () {
-                  final double r =
-                      double.tryParse(radiusController.text) ?? 0;
                   setState(() {
-                    result = pi * r * r;
+                    area = radius * radius * pi; // Used dart:math's pi
                   });
                 },
-                child: const Text(
-                  "Calculate Area",
-                  style: TextStyle(color: Colors.black, fontSize: 16),
-                ),
+                child: const Text("Calculate"), // Added const
               ),
             ),
-
-            // RESULT DISPLAY
-            Text(
-              "Area: ${result?.toStringAsFixed(4) ?? '--'}",
-              style:
-                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text("Result= $area"),
+            const SizedBox(height: 8), // Added const
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Simply pop the current screen off the navigation stack
+                  Navigator.pop(context); 
+                },
+                child: const Text("Back"), // Added const
+              ),
             ),
           ],
         ),

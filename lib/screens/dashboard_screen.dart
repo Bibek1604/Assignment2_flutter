@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:project_final/richtextscreen.dart';
 import 'arithmetic_screen.dart';
 import 'simpleinterest_screen.dart';
 import 'area_of_circle_screen.dart';
 import 'palindrome_screen.dart';
+import 'flutter_layout_screen.dart';
+
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -15,7 +18,8 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Features Hub"),
+        automaticallyImplyLeading: false,
+        title: const Text("Features Hubs"),
         backgroundColor: Colors.amber,
       ),
       body: Padding(
@@ -27,7 +31,7 @@ class DashboardScreen extends StatelessWidget {
           children: [
             _buildCard(
               context,
-              title: "Arithmetic",
+              title: "Arithmetic Opertion",
               icon: Icons.calculate,
               screen: const ArithmeticScreen(),
             ),
@@ -49,6 +53,16 @@ class DashboardScreen extends StatelessWidget {
               icon: Icons.text_fields,
               screen: const PalindromeScreen(),
             ),
+            _buildCard(
+              context,
+              title: "Layout Examples",
+              icon: Icons.view_comfy,
+              screen: const LayoutScreen(),
+            ),
+            _buildCard(context, 
+            title: "richtext",
+             icon: Icons.text_decrease, 
+            screen: const RichTextScreen())
           ],
         ),
       ),
